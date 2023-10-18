@@ -1,0 +1,16 @@
+export default {
+  COLOR_BLUE: 'blue',
+  COLOR_GRAY: 'gray',
+  COLOR_GREEN: 'green',
+  COLOR_RED: 'red',
+  SCREEN_ICON: 100,
+  RIGHT_ICON: 30,
+  ICON_HOME: 'home',
+  ICON_EDIT: 'edit',
+  ICON_SYNC: 'sync',
+  ICON_FRIEND: 'group',
+  ICON_ADD: 'add',
+  ICON_SETTING: 'settings',
+  ROOT_FRIEND_DETAIL: 'FriendDetail',
+  ROOT_NEW_FRIEND: "NewFriend",
+};
