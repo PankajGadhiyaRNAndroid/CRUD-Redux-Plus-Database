@@ -2,10 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // Action to fetch Friendlists 
 export const fetchFriends = createAsyncThunk("fetchFriendList", async () => {
-    console.log('Triggered in API :---> ');
     const res = await fetch('https://fakestoreapi.com/products');
     const result = await res.json();
-    console.log('This is result reducer :---> ', result);
     return result;
 });
 
