@@ -4,7 +4,6 @@ This repo included with Insert update record using SQlite database and fetching 
 # Node Install
 npm install 
 
-
 # Run on Device 
 react-native run-android 
 
