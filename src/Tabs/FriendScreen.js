@@ -5,43 +5,25 @@ import { fetchFriends } from '../Redux/slices/FriendSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { openDatabase } from 'react-native-sqlite-storage';
-import { withnavigation } from 'react-navigation'
 var db = openDatabase({ name: 'UserFriendlist.db' });
-
 
 function FriendScreen({ route, navigation }) {
   const [isdataStored, setDataStore] = useState(false);
   const [databaserecord, setDatabaseRecord] = useState([]);
-  const dispatch = useDispatch();
   const friends = useSelector(state => state.friends);
   const friendsData = useSelector(state => state.friends.friendData);
+  const dispatch = useDispatch();
 
-  //  Initial useEffect 
-  // useEffect(() => {
-  //   console.log('Initial USEEFFECT :---> ');
-  //   getAllRecord();
-  // }, []);
-
- 
   useEffect(() => {
-    // const interval = setInterval(() => {
-    //   console.log('Getting interval here :----> ');
-    // }, 1000);
-
-    // Subscribe for the focus Listener
     const unsubscribe = navigation.addListener('focus', () => {
       getAllRecord();
-      console.log('Getting Focus here :----> ');
     });
-
     return () => {
-      // clearTimeout(interval);
       unsubscribe;
     };
   }, [navigation]);
 
   useEffect(() => {
-    console.log('INSERT DATA USEEFFECT :---> ');
     if (friendsData.length > 0) {
       insertFriends(friendsData)
     }
@@ -70,6 +52,7 @@ function FriendScreen({ route, navigation }) {
             }
             if (temp.length > 0) {
               setDatabaseRecord(temp);
+              setDataStore(false);
             }
           }
         }
@@ -94,7 +77,6 @@ function FriendScreen({ route, navigation }) {
       });
     }
     setDataStore(true)
-
   }
 
   const gotoDetail = (item) => () => {
@@ -114,10 +96,6 @@ function FriendScreen({ route, navigation }) {
       <View style={styles.rowcontainer}>
         <TouchableOpacity style={styles.rowButton} onPress={gotoDetail(item)}>
           <View style={styles.rowDirection}>
-            {/* <Image
-              style={styles.rowimage}
-              source={{ uri: item.image }}
-            /> */}
             <View style={styles.rowDetail}>
               <Text style={styles.txtTitle}>{item.user_fname}</Text>
               <Text style={styles.txtrow}>{item.user_lname}</Text>
@@ -175,7 +153,8 @@ const styles = StyleSheet.create({
   },
   rowDetail: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
+    marginLeft: 15
   },
   extracontainer: {
     justifyContent: 'center',

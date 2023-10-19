@@ -1,17 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Global from '../Utils/Global';
+import NetInfo from '@react-native-community/netinfo';
 
 function SettingScreen() {
+  const [isOnline, setOnline] = useState(false);
 
   useEffect(() => {
     console.log('Same First effect :----> 1 ');
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setOnline(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    }
   }, []);
 
   useEffect(() => {
-    console.log('Same Second effect :----> 2 ');
-  }, []);
+    console.log('this is Internet status :---> ', isOnline);
+  }, [isOnline]);
+
   return (
     <View style={styles.maincontainer}>
       <Icon

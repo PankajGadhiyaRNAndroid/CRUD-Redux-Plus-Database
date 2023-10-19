@@ -52,10 +52,6 @@ function FriendDetail({ route, navigation }) {
                 color={Global.COLOR_GRAY}
                 size={Global.RIGHT_ICON} />
             </TouchableOpacity>
-            {/* <Image
-              style={styles.rowimage}
-              source={{ uri: singleFriend.image }}
-            /> */}
             <Text style={styles.txtTitle}>{singleFriend.user_fname}</Text>
             <Text style={styles.marginTop}>{singleFriend.user_lname}</Text>
             <Text style={styles.marginTop} >{singleFriend.user_age}</Text>

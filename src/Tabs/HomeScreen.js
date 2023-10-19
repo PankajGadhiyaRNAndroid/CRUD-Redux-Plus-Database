@@ -4,19 +4,20 @@ import { launchCamera } from 'react-native-image-picker';
 import { openDatabase } from 'react-native-sqlite-storage';
 import NetInfo from '@react-native-community/netinfo';
 import { useDispatch, useSelector } from 'react-redux';
-import { createFriend } from '../Redux/slices/CreateFriendSlice';
+import { syncFriends } from '../Redux/slices/SyncSlice';
 var db = openDatabase({ name: 'UserFriendlist.db' });
 
 function HomeScreen() {
   const dispatch = useDispatch();
-  const [isOnline, setOnline] = useState(true);
+  const [isOnline, setOnline] = useState(false);
   const [selectedimage, setSelectedImage] = useState("");
   const [offlinedata, setOfflineData] = useState("");
   const [loadimage, setLoadImage] = useState("");
 
   useEffect(() => {
+    console.log('Home screen Status NETWORK:==> ', isOnline);
     if (isOnline) {
-      dispatch(createFriend(offlinedata));
+      dispatch(syncFriends(offlinedata));
     }
   }, [isOnline])
 
@@ -47,10 +48,6 @@ function HomeScreen() {
 
   }
 
-
-
-
-
   useEffect(() => {
     db.transaction((txn) => {
       txn.executeSql(
@@ -69,6 +66,7 @@ function HomeScreen() {
         }
       );
     });
+
     const unsubscribe = NetInfo.addEventListener(state => {
       setOnline(state.isConnected);
     });
@@ -86,8 +84,6 @@ function HomeScreen() {
         (tx, results) => {
           var temp = [];
           for (let i = 0; i < results.rows.length; ++i) {
-            console.log('database Record=>> ', JSON.stringify(results.rows.item(i)));
-            console.log('database Record=>> ', results.rows.item(i).user_age);
             let customObj = {
               "attributes": {
                 "type": "Friend__c"
@@ -110,7 +106,6 @@ function HomeScreen() {
   const loadImage = () => {
     selectedimage && setLoadImage(selectedimage);
   }
-
 
   return (
     <View style={styles.maincontainer}>
@@ -138,7 +133,6 @@ function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-
     </View>
   );
 }
@@ -161,8 +155,14 @@ const styles = StyleSheet.create({
   btnText: {
     fontWeight: 'bold'
   },
-  image: { flex: 1, height: 200, width: 200 },
-  flexcontainer: { flex: 1 }
+  image: {
+    flex: 1,
+    height: 200,
+    width: 200
+  },
+  flexcontainer: {
+    flex: 1
+  }
 });
 
 export default HomeScreen;
