@@ -23,7 +23,6 @@ export const createFriend = createAsyncThunk("submitNewFriend", async (data, { r
             return rejectWithValue(response.status);
         }
     } catch (error) {
-        console.log('Catch Error :----> ', error);
         return rejectWithValue(error);
     }
 });
