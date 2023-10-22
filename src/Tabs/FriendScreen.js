@@ -88,7 +88,7 @@ function FriendScreen({ route, navigation }) {
   }
 
   const onSyncPressed = (item) => () => {
-    alert('sync pressed')
+    alert('sync API Call will be happens here ')
   }
 
   const renderItem = ({ item }) => {
